@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import { Inter } from 'next/font/google'
 import Footer from '@/components/Footer'
 import { Header } from '@/components/Header'
+import { CartProvider } from '@/contexts/CartContext'
 import { AuthProvider } from './Providers'
 import './globals.css'
 
@@ -17,12 +18,17 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang='en'>
+    <html
+      lang='en'
+      className='scrollbar-thin scrollbar-thumb-rose-500 scrollbar-track-white overflow-y-scroll'
+    >
       <body className={inter.className}>
         <AuthProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
+          <CartProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </CartProvider>
         </AuthProvider>
       </body>
     </html>

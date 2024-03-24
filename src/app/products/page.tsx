@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import SingleProduct from '@/components/products/singleProduct'
+import { CartContext } from '@/contexts/CartContext'
 import { defaultProductValues } from '../api/auth/constants/constants'
 import { mockProducts } from '../api/auth/mocks/mocks'
 import { filterOptionsData } from '../api/auth/mocks/mocks'
@@ -16,6 +17,7 @@ const ProductsPage = () => {
   const [priceFrom, setPriceFrom] = useState<string>('')
   const [priceTo, setPriceTo] = useState<string>('')
   const productsPerPage = 20
+  const { addToCart } = useContext(CartContext)
 
   const filteredProducts = mockProducts.filter(
     (product) =>

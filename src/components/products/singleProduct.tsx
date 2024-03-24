@@ -1,5 +1,6 @@
-import React, { MouseEvent, useState } from 'react'
+import React, { MouseEvent, useContext, useEffect, useState } from 'react'
 import Image from 'next/image'
+import { CartContext } from '@/contexts/CartContext'
 
 interface SingleProductProps {
   product: {
@@ -18,6 +19,12 @@ const SingleProduct: React.FC<SingleProductProps> = ({ product, onClick, product
   const [zoomable, setZoomable] = useState(false)
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 })
   const [position, setPosition] = useState({ x: 100, y: 100, mouseX: 0, mouseY: 0 })
+  const { addToCart } = useContext(CartContext)
+
+  const handleCartButton = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    addToCart(product)
+  }
 
   const MAGNIFIER_SIZE = 150
   const ZOOM_LEVEL = 2.5
@@ -99,9 +106,12 @@ const SingleProduct: React.FC<SingleProductProps> = ({ product, onClick, product
               }}
             ></div>
           )}
-          <a className='bg-green-500 text-white inline-block px-5 py-3 my-2 rounded-md cursor-pointer transition duration-00 ease-in-out hover:bg-green-700'>
+          <button
+            onClick={handleCartButton}
+            className='bg-green-500 text-white inline-block px-5 py-3 my-2 rounded-md cursor-pointer transition duration-00 ease-in-out hover:bg-green-700'
+          >
             Add to cart 🛒
-          </a>
+          </button>
         </div>
       </div>
       {productSelected && (
